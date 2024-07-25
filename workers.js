@@ -12,28 +12,76 @@ async function handleRequest(request) {
 
   // Define the target host based on the path
   let targetHost
-  if (url.pathname.startsWith('/kws1ws/')) {
+  let targetPath
+  if (url.pathname.startsWith('/kws1ws/apiws')) {
     targetHost = 'kws1.web.telegram.org'
-  } else if (url.pathname.startsWith('/kws2ws/')) {
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws2ws/apiws')) {
     targetHost = 'kws2.web.telegram.org'
-  } else if (url.pathname.startsWith('/kws3ws/')) {
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws3ws/apiws')) {
     targetHost = 'kws3.web.telegram.org'
-  } else if (url.pathname.startsWith('/kws4ws/')) {
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws4ws/apiws')) {
     targetHost = 'kws4.web.telegram.org'
-  } else if (url.pathname.startsWith('/kws5ws/')) {
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws5ws/apiws')) {
     targetHost = 'kws5.web.telegram.org'
-  } else if (url.pathname.startsWith('/plutows/')) {
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws1-1ws/apiws')) {
+    targetHost = 'kws1-1.web.telegram.org'
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws2-1ws/apiws')) {
+    targetHost = 'kws2-1.web.telegram.org'
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws3-1ws/apiws')) {
+    targetHost = 'kws3-1.web.telegram.org'
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws4-1ws/apiws')) {
+    targetHost = 'kws4-1.web.telegram.org'
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/kws5-1ws/apiws')) {
+    targetHost = 'kws5-1.web.telegram.org'
+    targetPath = '/apiws'
+  } else if (url.pathname.startsWith('/plutows/apiw1')) {
     targetHost = 'pluto.web.telegram.org'
-  } else if (url.pathname.startsWith('/venusws/')) {
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/venusws/apiw1')) {
     targetHost = 'venus.web.telegram.org'
-  } else if (url.pathname.startsWith('/auroraws/')) {
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/auroraws/apiw1')) {
     targetHost = 'aurora.web.telegram.org'
-  } else if (url.pathname.startsWith('/vestaws/')) {
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/vestaws/apiw1')) {
     targetHost = 'vesta.web.telegram.org'
-  } else if (url.pathname.startsWith('/floraws/')) {
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/floraws/apiw1')) {
     targetHost = 'flora.web.telegram.org'
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/pluto-1ws/apiw1')) {
+    targetHost = 'pluto-1.web.telegram.org'
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/venus-1ws/apiw1')) {
+    targetHost = 'venus-1.web.telegram.org'
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/aurora-1ws/apiw1')) {
+    targetHost = 'aurora-1.web.telegram.org'
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/vestaws-1ws/apiw1')) {
+    targetHost = 'vesta-1.web.telegram.org'
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/flora-1ws/apiw1')) {
+    targetHost = 'flora-1.web.telegram.org'
+    targetPath = '/apiw1'
+  } else if (url.pathname.startsWith('/assets/')) {
+    targetHost = 'webk.telegram.org'
+    targetPath = '/assets'
+  } else if (url.pathname.startsWith('/stream/')) {
+    targetHost = 'webk.telegram.org'
+    targetPath = '/stream'
   } else {
     targetHost = 'webk.telegram.org'
+    targetPath = url.pathname
   }
 
   // Modify the request headers
@@ -47,6 +95,8 @@ async function handleRequest(request) {
   // Modify the request URL
   const targetUrl = new URL(request.url)
   targetUrl.hostname = targetHost
+  targetUrl.pathname = targetPath + url.pathname.substring(targetPath.length)
+  
 
   // Create a new request with the modified headers and URL
   const modifiedRequest = new Request(targetUrl.toString(), {
@@ -58,9 +108,6 @@ async function handleRequest(request) {
 
   // Fetch the response from the target host
   const response = await fetch(modifiedRequest)
-
-  // Clone the response to read the body multiple times
-  const responseClone = response.clone();
 
   // Check if the response is a JavaScript file and starts with "mtproto.worker"
   const contentType = response.headers.get('Content-Type')
@@ -84,12 +131,12 @@ async function handleRequest(request) {
     //Please replace your-domain.com below with the domain of your workers or the domain on your DNS record
     modifiedCode = modifiedCode
       .replace(telegramRegex, 'ws')
-      .replace(wssRegex, 'wss://your-domain.com/')
-      .replace(plutoRegex, 'your-domain.com/pluto')
-      .replace(venusRegex, 'your-domain.com/venus')
-      .replace(auroraRegex, 'your-domain.com/aurora')
-      .replace(vestaRegex, '"your-domain.com/vesta", ')
-      .replace(floraRegex, 'your-domain.com/flora')
+      .replace(wssRegex, 'wss://yourdomain.com/')
+      .replace(plutoRegex, 'yourdomain.com/pluto')
+      .replace(venusRegex, 'yourdomain.com/venus')
+      .replace(auroraRegex, 'yourdomain.com/aurora')
+      .replace(vestaRegex, '"yourdomain.com/vesta", ')
+      .replace(floraRegex, 'yourdomain.com/flora')
 
     // Create a new response with the modified code
     const modifiedResponse = new Response(modifiedCode, {
@@ -112,4 +159,3 @@ async function handleRequest(request) {
   // Return the original response for unmodified requests
   return response
 }
-
