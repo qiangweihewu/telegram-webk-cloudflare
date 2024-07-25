@@ -80,6 +80,8 @@ async function handleRequest(request) {
     const vestaRegex =/"vesta",/g
     const floraRegex = /flora/g
 
+    //请将下面的 your-domain.com 替换成你workers的域名或你在cloudflare DNS记录中绑定的域名
+    //Please replace your-domain.com below with the domain of your workers or the domain on your DNS record
     modifiedCode = modifiedCode
       .replace(telegramRegex, 'ws')
       .replace(wssRegex, 'wss://your-domain.com/')
