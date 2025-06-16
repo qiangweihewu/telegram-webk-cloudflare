@@ -1,5 +1,7 @@
 # Telegram Web Client Proxy
 
+> [English Version](README-EN.md) | 中文版本
+
 一个安全、优化的Telegram Web客户端反向代理解决方案，部署在Cloudflare Workers上。
 
 ## 特性
