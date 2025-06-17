@@ -181,7 +181,7 @@ async function handleRequest(request) {
     // Add security headers
     modifiedResponse.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
     // Replace your-worker-domain.com with the actual domain your worker is served from
-    modifiedResponse.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' wss://your-worker-domain.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' wss://your-worker-domain.com https://*.telegram.org; frame-ancestors 'none'; object-src 'none'; base-uri 'self';")
+    modifiedResponse.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' blob: wss://your-worker-domain.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' wss://your-worker-domain.com https://*.telegram.org; frame-ancestors 'none'; object-src 'none'; base-uri 'self';")
     modifiedResponse.headers.set('X-Frame-Options', 'DENY')
     modifiedResponse.headers.set('X-Content-Type-Options', 'nosniff')
     modifiedResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
@@ -193,7 +193,7 @@ async function handleRequest(request) {
   const newResponseHeaders = new Headers(response.headers)
   newResponseHeaders.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
   // Replace your-worker-domain.com with the actual domain your worker is served from
-  newResponseHeaders.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' wss://your-worker-domain.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' wss://your-worker-domain.com https://*.telegram.org; frame-ancestors 'none'; object-src 'none'; base-uri 'self';")
+  newResponseHeaders.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' blob: wss://your-worker-domain.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' wss://your-worker-domain.com https://*.telegram.org; frame-ancestors 'none'; object-src 'none'; base-uri 'self';")
   newResponseHeaders.set('X-Frame-Options', 'DENY')
   newResponseHeaders.set('X-Content-Type-Options', 'nosniff')
   newResponseHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin')
